@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class SumLongTest {
     @Test(dataProviderClass = DataProviders.class,dataProvider = "sumLongTest",groups = "sumSub")
-    public void simpleTest(Long a, Long b, Long result){
+    public void sumLongTest(Long a, Long b, Long result){
         Calculator calculator=new Calculator();
         Assert.assertEquals(calculator.sum(a,b),result);
     }

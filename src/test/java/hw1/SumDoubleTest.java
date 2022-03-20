@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 
 public class SumDoubleTest {
     @Test(dataProviderClass = DataProviders.class, dataProvider = "sumDoubleTest",groups = "sumSub")
-    public void simpleTest(double a,double b, double result){
+    public void sumDoubleTest(double a,double b, double result){
         Calculator calculator = new Calculator();
         Assert.assertEquals(calculator.sum(a,b),result);
     }

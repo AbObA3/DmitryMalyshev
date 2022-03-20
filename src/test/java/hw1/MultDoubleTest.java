@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 public class MultDoubleTest {
     @Test(dataProviderClass = DataProviders.class,dataProvider = "multDoubleTest",groups = "multDiv")
-    public void simpleTest(double a, double b , double result){
+    public void multDoubleTest(double a, double b , double result){
         Calculator calculator = new Calculator();
         Assert.assertEquals(calculator.mult(a,b),result);
     }
