@@ -19,8 +19,8 @@ public class TestExercise1 extends BeforeAfterTests {
         softAssert.assertEquals(driver.getTitle(), "Home Page");
 
         //exercise 1. Perform login
-        WebElement toggle = driver.findElements(By.className("dropdown-toggle"))
-                .stream().skip(1).peek(WebElement::click)
+        WebElement toggle = driver.findElements(By.cssSelector("a[href = '#']"))
+                .stream().peek(WebElement::click)
                 .findFirst().orElse(null);
         driver.findElement(By.id("name")).sendKeys("Roman");
         driver.findElement(By.id("password")).sendKeys("Jdi1234");
@@ -51,8 +51,7 @@ public class TestExercise1 extends BeforeAfterTests {
                 .className("icon-base")).isDisplayed(), true);
 
         //exercise 1. Assert that there are 4 texts on the Index Page under icons and they have proper text
-        List<WebElement> benefitTxt = driver.findElements(By
-                .className("benefit-txt"));
+        List<WebElement> benefitTxt = driver.findElements(By.className("benefit-txt"));
         softAssert.assertEquals(benefitTxt.get(0).getText(),
                 "To include good practices\n" +
                         "and ideas from successful\n" +
@@ -86,20 +85,14 @@ public class TestExercise1 extends BeforeAfterTests {
 
         //Exercise 1. Assert that there are 5 items in the Left Section are displayed and they have proper text
         List<WebElement> names = driver
-                .findElement(By.cssSelector("ul[class = 'sidebar-menu left']"))
-                .findElements(By.tagName("span")).stream()
-                .filter((s) -> !(s.getText().equals("")))
+                .findElements(By.cssSelector("ul[class = 'sidebar-menu left'] span")).stream()
+                .filter((s) -> (s.getText().equals("Home")
+                        || s.getText().equals("Contact form")
+                        || s.getText().equals("Service")
+                        || s.getText().equals("Metals & Colors")
+                        || s.getText().equals("Elements packs"))).
+                peek((s) -> softAssert.assertEquals(s.isDisplayed(), true))
                 .collect(Collectors.toList());
-        softAssert.assertEquals(names.get(0).getText(), "Home");
-        softAssert.assertEquals(names.get(0).isDisplayed(), true);
-        softAssert.assertEquals(names.get(1).getText(), "Contact form");
-        softAssert.assertEquals(names.get(1).isDisplayed(), true);
-        softAssert.assertEquals(names.get(2).getText(), "Service");
-        softAssert.assertEquals(names.get(2).isDisplayed(), true);
-        softAssert.assertEquals(names.get(3).getText(), "Metals & Colors");
-        softAssert.assertEquals(names.get(3).isDisplayed(), true);
-        softAssert.assertEquals(names.get(4).getText(), "Elements packs");
-        softAssert.assertEquals(names.get(4).isDisplayed(), true);
         softAssert.assertAll();
     }
 }
