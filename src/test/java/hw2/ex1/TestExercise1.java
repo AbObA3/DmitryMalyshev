@@ -1,14 +1,15 @@
 package hw2.ex1;
 
-import hw2.BeforeAfterTests;
+import hw2.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TestExercise1 extends BeforeAfterTests {
+public class TestExercise1 extends BaseTest {
 
     @Test
     public void exercise1Test() {
@@ -19,9 +20,7 @@ public class TestExercise1 extends BeforeAfterTests {
         softAssert.assertEquals(driver.getTitle(), "Home Page");
 
         //exercise 1. Perform login
-        WebElement toggle = driver.findElements(By.cssSelector("a[href = '#']"))
-                .stream().peek(WebElement::click)
-                .findFirst().orElse(null);
+        driver.findElement(By.cssSelector("a[href = '#']")).click();
         driver.findElement(By.id("name")).sendKeys("Roman");
         driver.findElement(By.id("password")).sendKeys("Jdi1234");
         driver.findElement(By.id("login-button")).click();
@@ -31,24 +30,24 @@ public class TestExercise1 extends BeforeAfterTests {
                 "ROMAN IOVLEV");
 
         //exercise 1. Assert that there are 4 items on the header section are displayed and they have proper texts
-        softAssert.assertEquals(driver.findElement(By.linkText("Home"))
-                .isDisplayed(), true);
-        softAssert.assertEquals(driver.findElement(By.linkText("Contact form"))
-                .isDisplayed(), true);
-        softAssert.assertEquals(driver.findElement(By.linkText("Service"))
-                .isDisplayed(), true);
-        softAssert.assertEquals(driver.findElement(By.linkText("Metals & Colors"))
-                .isDisplayed(), true);
+        softAssert.assertTrue(driver.findElement(By.linkText("Home"))
+                .isDisplayed());
+        softAssert.assertTrue(driver.findElement(By.linkText("Contact form"))
+                .isDisplayed());
+        softAssert.assertTrue(driver.findElement(By.linkText("Service"))
+                .isDisplayed());
+        softAssert.assertTrue(driver.findElement(By.linkText("Metals & Colors"))
+                .isDisplayed());
 
         //exercise 1. Assert that there are 4 images on the Index Page and they are displayed
-        softAssert.assertEquals(driver.findElement(By
-                .className("icon-practise")).isDisplayed(), true);
-        softAssert.assertEquals(driver.findElement(By
-                .className("icon-custom")).isDisplayed(), true);
-        softAssert.assertEquals(driver.findElement(By
-                .className("icon-multi")).isDisplayed(), true);
-        softAssert.assertEquals(driver.findElement(By
-                .className("icon-base")).isDisplayed(), true);
+        softAssert.assertTrue(driver.findElement(By
+                .className("icon-practise")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .className("icon-custom")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .className("icon-multi")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .className("icon-base")).isDisplayed());
 
         //exercise 1. Assert that there are 4 texts on the Index Page under icons and they have proper text
         List<WebElement> benefitTxt = driver.findElements(By.className("benefit-txt"));
@@ -68,31 +67,25 @@ public class TestExercise1 extends BeforeAfterTests {
                         "wish to get more…");
 
         //Exercise 1. Assert that there is the iframe with “Frame Button” exist
-        softAssert.assertEquals(driver
-                .findElement(By.id("frame")).isDisplayed(), true);
+        softAssert.assertTrue(driver
+                .findElement(By.id("frame")).isDisplayed());
 
         //Exercise 1. Switch to the iframe and check that there is “Frame Button” in the iframe
         String mainWindow = driver.getWindowHandle();
         driver.switchTo().frame("frame");
-        softAssert.assertEquals(driver
-                .findElement(By.id("frame-button")).isDisplayed(), true);
+        softAssert.assertTrue(driver
+                .findElement(By.id("frame-button")).isDisplayed());
 
         //Exercise 1. Switch to original window back
         driver.switchTo().defaultContent();
         WebElement curWindow = driver.findElement(By.tagName("body"));
-        softAssert.assertEquals(curWindow.equals(driver
-                .switchTo().activeElement()), true);
-
+        softAssert.assertTrue(curWindow.equals(driver
+                .switchTo().activeElement()));
         //Exercise 1. Assert that there are 5 items in the Left Section are displayed and they have proper text
-        List<WebElement> names = driver
-                .findElements(By.cssSelector("ul[class = 'sidebar-menu left'] span")).stream()
-                .filter((s) -> (s.getText().equals("Home")
-                        || s.getText().equals("Contact form")
-                        || s.getText().equals("Service")
-                        || s.getText().equals("Metals & Colors")
-                        || s.getText().equals("Elements packs"))).
-                peek((s) -> softAssert.assertEquals(s.isDisplayed(), true))
-                .collect(Collectors.toList());
+        List<String> names = driver.findElements(By.cssSelector("ul[class = 'sidebar-menu left']>li>a>span"))
+                .stream().map(WebElement::getText).collect(Collectors.toList());
+        softAssert.assertEquals(names, Arrays.asList("Home", "Contact form",
+                "Service", "Metals & Colors", "Elements packs"));
         softAssert.assertAll();
     }
 }

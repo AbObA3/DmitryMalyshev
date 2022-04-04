@@ -1,15 +1,11 @@
 package hw2.ex2;
 
-import hw2.BeforeAfterTests;
+import hw2.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-public class TestExercise2 extends BeforeAfterTests {
+public class TestExercise2 extends BaseTest {
 
     @Test
     public void exercise2Test() {
@@ -20,9 +16,7 @@ public class TestExercise2 extends BeforeAfterTests {
         softAssert.assertEquals(driver.getTitle(), "Home Page");
 
         //exercise 2. Perform login
-        WebElement toggle = driver.findElements(By.cssSelector("a[href = '#']"))
-                .stream().peek(WebElement::click)
-                .findFirst().orElse(null);
+        driver.findElement(By.cssSelector("a[href = '#']")).click();
         driver.findElement(By.id("name")).sendKeys("Roman");
         driver.findElement(By.id("password")).sendKeys("Jdi1234");
         driver.findElement(By.id("login-button")).click();
@@ -37,41 +31,34 @@ public class TestExercise2 extends BeforeAfterTests {
                 .cssSelector("[href='different-elements.html']")).click();
 
         //Exercise 2. Select checkboxes	Water
-        List<WebElement> checkboxes = driver
-                .findElements(By.cssSelector("label[class='label-checkbox']"))
+        driver.findElements(By.cssSelector("label[class='label-checkbox']"))
                 .stream().filter((s) -> ((s.getText().equals("Water"))
                         || (s.getText().equals("Wind"))))
-                .peek(WebElement::click).collect(Collectors.toList());
+                .forEach(WebElement::click);
 
         //Exercise 2. Select radio Selen
-        WebElement radioBoxSelen = driver
-                .findElements(By.cssSelector("label[class='label-radio']"))
+        driver.findElements(By.cssSelector("label[class='label-radio']"))
                 .stream().filter((s) -> (s.getText().equals("Selen")))
-                .peek(WebElement::click).findFirst().orElse(null);
+                .forEach(WebElement::click);
 
         //Exercise 2. Select in dropdown Yellow
-        WebElement colorYellow = driver
-                .findElement(By.cssSelector("select[class='uui-form-element']"))
+        driver.findElement(By.cssSelector("select[class='uui-form-element']"))
                 .findElements(By.tagName("option"))
                 .stream().filter((s) -> s.getText().equals("Yellow"))
-                .peek(WebElement::click).findFirst().orElse(null);
+                .forEach(WebElement::click);
 
         //Exercise 2. Assert that
         //•	for each checkbox there is an individual log row and value is corresponded to the status of checkbox
         //•	for radio button there is a log row and value is corresponded to the status of radio button
         //•	for dropdown there is a log row and value is corresponded to the selected value.
-        List<WebElement> logStrings = driver
-                .findElements(By.cssSelector("ul[class = 'panel-body-list logs'] li"));
-        Pattern pattern = Pattern
-                .compile("(\\w*)Colors|metal|Wind|Water(\\w*)Yellow|true|Selen");
-        softAssert.assertEquals(pattern.matcher(logStrings.get(0).getText())
-                .find(), true);
-        softAssert.assertEquals(pattern.matcher(logStrings.get(1).getText())
-                .find(), true);
-        softAssert.assertEquals(pattern.matcher(logStrings.get(2).getText())
-                .find(), true);
-        softAssert.assertEquals(pattern.matcher(logStrings.get(3).getText())
-                .find(), true);
+
+        driver.findElements(By.cssSelector("ul[class = 'panel-body-list logs'] li"))
+                .stream().map(WebElement::getText)
+                .forEach((s) -> softAssert.assertTrue(s
+                        .matches("(\\d\\d:\\d\\d:\\d\\d Wind: condition changed to true)" +
+                                "|(\\d\\d:\\d\\d:\\d\\d Water: condition changed to true)" +
+                                "|(\\d\\d:\\d\\d:\\d\\d Colors: value changed to Yellow)" +
+                                "|(\\d\\d:\\d\\d:\\d\\d metal: value changed to Selen)")));
         softAssert.assertAll();
     }
 
