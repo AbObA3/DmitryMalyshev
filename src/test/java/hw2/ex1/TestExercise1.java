@@ -30,14 +30,14 @@ public class TestExercise1 extends BaseTest {
                 "ROMAN IOVLEV");
 
         //exercise 1. Assert that there are 4 items on the header section are displayed and they have proper texts
-        softAssert.assertTrue(driver.findElement(By.linkText("Home"))
-                .isDisplayed());
-        softAssert.assertTrue(driver.findElement(By.linkText("Contact form"))
-                .isDisplayed());
-        softAssert.assertTrue(driver.findElement(By.linkText("Service"))
-                .isDisplayed());
-        softAssert.assertTrue(driver.findElement(By.linkText("Metals & Colors"))
-                .isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .linkText("Home")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .linkText("Contact form")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .linkText("Service")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .linkText("Metals & Colors")).isDisplayed());
 
         //exercise 1. Assert that there are 4 images on the Index Page and they are displayed
         softAssert.assertTrue(driver.findElement(By
@@ -51,21 +51,20 @@ public class TestExercise1 extends BaseTest {
 
         //exercise 1. Assert that there are 4 texts on the Index Page under icons and they have proper text
         List<WebElement> benefitTxt = driver.findElements(By.className("benefit-txt"));
-        softAssert.assertEquals(benefitTxt.get(0).getText(),
+        List<String> Texts = Arrays.asList(
                 "To include good practices\n" +
                         "and ideas from successful\n" +
-                        "EPAM project");
-        softAssert.assertEquals(benefitTxt.get(1).getText(),
+                        "EPAM project",
                 "To be flexible and\n" +
-                        "customizable");
-        softAssert.assertEquals(benefitTxt.get(2).getText(),
-                "To be multiplatform");
-        softAssert.assertEquals(benefitTxt.get(3).getText(),
+                        "customizable",
+                "To be multiplatform",
                 "Already have good base\n" +
                         "(about 20 internal and\n" +
                         "some external projects),\n" +
                         "wish to get more…");
-
+        for (int i = 0; i < 4; i++) {
+            softAssert.assertEquals(benefitTxt.get(i).getText(), Texts.get(i));
+        }
         //Exercise 1. Assert that there is the iframe with “Frame Button” exist
         softAssert.assertTrue(driver
                 .findElement(By.id("frame")).isDisplayed());
@@ -73,8 +72,8 @@ public class TestExercise1 extends BaseTest {
         //Exercise 1. Switch to the iframe and check that there is “Frame Button” in the iframe
         String mainWindow = driver.getWindowHandle();
         driver.switchTo().frame("frame");
-        softAssert.assertTrue(driver
-                .findElement(By.id("frame-button")).isDisplayed());
+        softAssert.assertTrue(driver.findElement(By
+                .id("frame-button")).isDisplayed());
 
         //Exercise 1. Switch to original window back
         driver.switchTo().defaultContent();
@@ -83,7 +82,8 @@ public class TestExercise1 extends BaseTest {
                 .switchTo().activeElement()));
         //Exercise 1. Assert that there are 5 items in the Left Section are displayed and they have proper text
         List<String> names = driver.findElements(By.cssSelector("ul[class = 'sidebar-menu left']>li>a>span"))
-                .stream().map(WebElement::getText).collect(Collectors.toList());
+                .stream().peek((s) -> softAssert.assertTrue(s.isDisplayed()))
+                .map(WebElement::getText).collect(Collectors.toList());
         softAssert.assertEquals(names, Arrays.asList("Home", "Contact form",
                 "Service", "Metals & Colors", "Elements packs"));
         softAssert.assertAll();
