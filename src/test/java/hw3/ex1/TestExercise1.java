@@ -1,9 +1,9 @@
 package hw3.ex1;
 
 import hw2.BaseTest;
-import hw3.HomePage;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+import pages.HomePage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,13 +14,13 @@ public class TestExercise1 extends BaseTest {
     @Test
     public void exercise1Test() {
         //exercise 1. Open test site by URL
-        driver.navigate().to(properties.getProperty("url"));
+        HomePage homePage = new HomePage(driver);
+        homePage.open(driver, properties.getProperty("url"));
 
         //exercise 1. Assert Browser title
         softAssert.assertEquals(driver.getTitle(), "Home Page");
 
         //exercise 1. Perform login
-        HomePage homePage = new HomePage(driver);
         homePage.login(properties.getProperty("name"), properties.getProperty("password"));
 
         //exercise 1. Assert Username is loggined

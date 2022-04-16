@@ -1,9 +1,12 @@
-package hw3;
+package pages;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DifferentElementsPage {
 
@@ -18,6 +21,10 @@ public class DifferentElementsPage {
 
     @FindBy(css = "ul[class = 'panel-body-list logs'] li")
     private List<WebElement> logs;
+
+    public DifferentElementsPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
     public void clickCheckboxItem(final String item) {
         for (WebElement element : checkBoxes) {
@@ -46,7 +53,10 @@ public class DifferentElementsPage {
         }
     }
 
-    public List<WebElement> getLogs() {
-        return this.logs;
+    public List<String> getLogs() {
+        return this.logs
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
     }
 }

@@ -1,24 +1,23 @@
 package hw3.ex2;
 
 import hw2.BaseTest;
-import hw3.DifferentElementsPage;
-import hw3.HomePage;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
+import pages.DifferentElementsPage;
+import pages.HomePage;
 
 public class TestExercise2 extends BaseTest {
 
     @Test
     public void exercise2Test() {
         //exercise 2. Open test site by URL
-        driver.navigate().to(properties.getProperty("url"));
+        HomePage homePage = new HomePage(driver);
+        homePage.open(driver, properties.getProperty("url"));
 
         //exercise 2. Assert Browser title
         softAssert.assertEquals(driver.getTitle(), "Home Page");
 
         //exercise 2. Perform login
-        HomePage homePage = new HomePage(driver);
         homePage.login(properties.getProperty("name"), properties.getProperty("password"));
 
         //exercise 2. Assert Username in the left-top side of screen that user is loggined
@@ -29,7 +28,7 @@ public class TestExercise2 extends BaseTest {
         homePage.clickDropdownMenuItems("DIFFERENT ELEMENTS");
 
         //Exercise 2. Select checkboxes	Water
-        DifferentElementsPage differentElementsPage = PageFactory.initElements(driver, DifferentElementsPage.class);
+        DifferentElementsPage differentElementsPage = new DifferentElementsPage(driver);
         differentElementsPage.clickCheckboxItem("Water");
         differentElementsPage.clickCheckboxItem("Wind");
 
@@ -44,8 +43,7 @@ public class TestExercise2 extends BaseTest {
         //•	for radio button there is a log row and value is corresponded to the status of radio button
         //•	for dropdown there is a log row and value is corresponded to the selected value.
 
-        differentElementsPage.getLogs().stream()
-                .map(WebElement::getText)
+        differentElementsPage.getLogs()
                 .forEach((s) -> softAssert.assertTrue(s
                         .matches("(\\d\\d:\\d\\d:\\d\\d Wind: condition changed to true)" +
                                 "|(\\d\\d:\\d\\d:\\d\\d Water: condition changed to true)" +

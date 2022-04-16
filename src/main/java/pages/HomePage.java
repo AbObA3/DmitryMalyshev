@@ -1,5 +1,7 @@
-package hw3;
+package pages;
 
+import elements.HeaderMenu;
+import elements.LeftMenu;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -51,6 +53,9 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
+    public void open(WebDriver driver, String url){
+        driver.navigate().to(url);
+    }
     public HeaderMenu getHeaderMenu() {
         return this.headerMenu;
     }
