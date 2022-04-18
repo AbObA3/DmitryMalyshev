@@ -13,6 +13,7 @@ public class HomePage {
 
     private HeaderMenu headerMenu;
     private LeftMenu leftMenu;
+    private WebDriver driver;
 
     @FindBy(css = "a[href = '#']")
     private WebElement loginCaret;
@@ -48,14 +49,16 @@ public class HomePage {
     private List<WebElement> dropdownItems;
 
     public HomePage(WebDriver driver) {
-        headerMenu = new HeaderMenu(driver);
-        leftMenu = new LeftMenu(driver);
-        PageFactory.initElements(driver, this);
+        this.driver = driver;
+        headerMenu = new HeaderMenu(this.driver);
+        leftMenu = new LeftMenu(this.driver);
+        PageFactory.initElements(this.driver, this);
     }
 
-    public void open(WebDriver driver, String url){
-        driver.navigate().to(url);
+    public void open(String url) {
+        this.driver.navigate().to(url);
     }
+
     public HeaderMenu getHeaderMenu() {
         return this.headerMenu;
     }

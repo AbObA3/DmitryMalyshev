@@ -12,7 +12,7 @@ public class TestExercise2 extends BaseTest {
     public void exercise2Test() {
         //exercise 2. Open test site by URL
         HomePage homePage = new HomePage(driver);
-        homePage.open(driver, properties.getProperty("url"));
+        homePage.open(properties.getProperty("url"));
 
         //exercise 2. Assert Browser title
         softAssert.assertEquals(driver.getTitle(), "Home Page");

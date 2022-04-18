@@ -15,7 +15,7 @@ public class TestExercise1 extends BaseTest {
     public void exercise1Test() {
         //exercise 1. Open test site by URL
         HomePage homePage = new HomePage(driver);
-        homePage.open(driver, properties.getProperty("url"));
+        homePage.open(properties.getProperty("url"));
 
         //exercise 1. Assert Browser title
         softAssert.assertEquals(driver.getTitle(), "Home Page");
