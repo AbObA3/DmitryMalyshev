@@ -42,8 +42,7 @@ public class TestExercise2 extends BaseTest {
                 .forEach(WebElement::click);
 
         //Exercise 2. Select in dropdown Yellow
-        driver.findElement(By.cssSelector("select[class='uui-form-element']"))
-                .findElements(By.tagName("option"))
+        driver.findElements(By.cssSelector("select[class='uui-form-element'] option"))
                 .stream().filter((s) -> s.getText().equals("Yellow"))
                 .forEach(WebElement::click);
 
@@ -61,5 +60,4 @@ public class TestExercise2 extends BaseTest {
                                 "|(\\d\\d:\\d\\d:\\d\\d metal: value changed to Selen)")));
         softAssert.assertAll();
     }
-
 }
