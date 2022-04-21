@@ -36,9 +36,9 @@ public class AssertionStep extends AbstractStep {
 
     @Step("Exercise 1. Assert that there are 4 texts on the Index Page under icons and they have proper text")
     public void assertIconsText(List<String> texts) {
-        Assert.assertTrue(homePage.getBenefitTxt()
-                .stream().map(WebElement::getText)
-                .collect(Collectors.toList()).equals(texts));
+        for(int i = 0; i< 4; i++){
+            Assert.assertEquals(homePage.getBenefitTxt().get(i).getText(),texts.get(i));
+        }
     }
 
     @Step("Exercise 1. Assert that there is the iframe with “Frame Button” exist")
