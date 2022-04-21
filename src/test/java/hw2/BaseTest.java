@@ -1,5 +1,8 @@
 package hw2;
 
+import hw4.steps.AbstractStep;
+import hw4.steps.ActionStep;
+import hw4.steps.AssertionStep;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
@@ -17,9 +20,11 @@ public class BaseTest {
     protected static SoftAssert softAssert;
     protected static WebDriver driver;
     protected static String path;
-    protected static Properties properties;
+    public static Properties properties;
+    protected ActionStep actionStep;
+    protected AssertionStep assertionStep;
 
-    @BeforeSuite
+    @BeforeSuite(description = "Set up properties and web driver")
     public void setUpSuite() {
         path = getClass().getClassLoader().getResource("chromedriver.exe").getPath();
         System.setProperty("webdriver.chrome.driver", path);
@@ -31,15 +36,17 @@ public class BaseTest {
         }
     }
 
-    @BeforeMethod
+    @BeforeMethod(description = "Set up chromeDriver, soft assert, steps, maximize window and timeots definition  ")
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(5000));
         softAssert = new SoftAssert();
+        actionStep = new ActionStep(driver);
+        assertionStep = new AssertionStep(driver);
     }
 
-    @AfterMethod
+    @AfterMethod(description = "tear down web driver")
     public void tearDown() {
         driver.quit();
     }
