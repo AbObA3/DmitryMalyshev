@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.Duration;
@@ -26,7 +27,7 @@ public class BaseTest {
 
     @BeforeSuite(description = "Set up properties and web driver")
     public void setUpSuite() {
-        path = getClass().getClassLoader().getResource("chromedriver.exe").getPath();
+        path = new File("").getAbsolutePath() + "//target//test-classes//chromedriver.exe";
         System.setProperty("webdriver.chrome.driver", path);
         properties = new Properties();
         try (FileReader fr = new FileReader("src/test/resources/config.properties");) {
