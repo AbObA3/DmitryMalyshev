@@ -38,7 +38,7 @@ public class AssertionStep extends AbstractStep {
     public void assertIconsText(List<String> texts) {
         Assert.assertTrue(homePage.getBenefitTxt()
                 .stream().map(WebElement::getText)
-                .collect(Collectors.toList()).containsAll(texts));
+                .collect(Collectors.toList()).equals(texts));
     }
 
     @Step("Exercise 1. Assert that there is the iframe with “Frame Button” exist")
