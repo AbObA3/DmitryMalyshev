@@ -36,8 +36,8 @@ public class AssertionStep extends AbstractStep {
 
     @Step("Exercise 1. Assert that there are 4 texts on the Index Page under icons and they have proper text")
     public void assertIconsText(List<String> texts) {
-        for(int i = 0; i< 4; i++){
-            Assert.assertEquals(homePage.getBenefitTxt().get(i).getText(),texts.get(i));
+        for (int i = 0; i < 4; i++) {
+            Assert.assertEquals(homePage.getBenefitTxt().get(i).getText(), texts.get(i));
         }
     }
 
@@ -53,16 +53,16 @@ public class AssertionStep extends AbstractStep {
 
     @Step("Exercise 1. Assert that focus on original window")
     public void assertOriginalWindow() {
-        Assert.assertEquals(driver
-                .switchTo().activeElement(), homePage.getBody());
+        Assert.assertEquals(driver.switchTo().activeElement(), homePage.getBody());
     }
 
     @Step("Exercise 1. Assert that there are 5 items {elements} in the Left Section are displayed and they have proper text")
     public void assertLeftSection(List<String> elements) {
-        Assert.assertEquals(elements, homePage
-                .getLeftMenu().getLeftMenuItems()
-                .stream().peek((s) -> Assert.assertTrue(s.isDisplayed()))
-                .map(WebElement::getText).collect(Collectors.toList()));
+        Assert.assertEquals(homePage
+                .getLeftMenu().getLeftMenuItems().stream()
+                .peek((s) -> Assert.assertTrue(s.isDisplayed()))
+                .map(WebElement::getText)
+                .collect(Collectors.toList()), elements);
     }
 
     @Step("Exercise 2. Assert logs")

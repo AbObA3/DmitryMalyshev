@@ -4,6 +4,8 @@ import hw2.BaseTest;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 
+import javax.annotation.Nullable;
+
 public class ActionStep extends AbstractStep {
 
     public ActionStep(WebDriver driver) {
@@ -16,8 +18,8 @@ public class ActionStep extends AbstractStep {
     }
 
     @Step("Exercise 1. Perform login")
-    public void loginHomePage() {
-        homePage.login(BaseTest.properties.getProperty("name"), BaseTest.properties.getProperty("password"));
+    public void loginHomePage(String login, String password) {
+        homePage.login(login, password);
     }
 
     @Step("Switch to frame {frameName}")
@@ -31,9 +33,11 @@ public class ActionStep extends AbstractStep {
     }
 
     @Step("Exercise 2. Open through the header menu Service -> Different Elements Page")
-    public void openDifferentElementsPage() {
-        homePage.getHeaderMenu().clickNavigatiounBarItem("SERVICE");
-        homePage.clickDropdownMenuItems("DIFFERENT ELEMENTS");
+    public void openHeaderDropdownMenuItem(String navBarItem, @Nullable String dropdownMenuItem) {
+        homePage.getHeaderMenu().clickNavigatiounBarItem(navBarItem);
+        if (navBarItem.equals("SERVICE")) {
+            homePage.clickDropdownMenuItems(dropdownMenuItem);
+        }
     }
 
     @Step("Exercise 2. Select checkbox {checkboxName}")

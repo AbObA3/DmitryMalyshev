@@ -24,7 +24,8 @@ public class TestClassExercise1 extends BaseTest {
         assertionStep.assertTitle("Home Page");
 
         //Exercise 1. Perform login
-        actionStep.loginHomePage();
+        actionStep.loginHomePage(BaseTest.properties.getProperty("name"),
+                BaseTest.properties.getProperty("password"));
 
         //Exercise 1. Assert Username is loggined
         assertionStep.assertUsername("ROMAN IOVLEV");

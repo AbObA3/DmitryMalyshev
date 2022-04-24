@@ -21,13 +21,14 @@ public class TestClassExercise2 extends BaseTest {
         assertionStep.assertTitle("Home Page");
 
         //Exercise 2. Perform login
-        actionStep.loginHomePage();
+        actionStep.loginHomePage(BaseTest.properties.getProperty("name"),
+                BaseTest.properties.getProperty("password"));
 
         //Exercise 2. Assert Username in the left-top side of screen that user is loggined
         assertionStep.assertUsername("ROMAN IOVLEV");
 
         //Exercise 2. Open through the header menu Service -> Different Elements Page
-        actionStep.openDifferentElementsPage();
+        actionStep.openHeaderDropdownMenuItem("SERVICE","DIFFERENT ELEMENTS");
 
         //Exercise 2. Select checkboxes	Water and Wind
         actionStep.selectCheckbox("Water");
